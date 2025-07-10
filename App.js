@@ -67,7 +67,35 @@ export default function App() {
     if (!perm.granted) return;
     const result = await ImagePicker.launchCameraAsync({ quality: 1 });
     if (!result.canceled) {
-      const uri = result.assets[0].uri;
+      const asset = result.assets[0];
+
+      // --- Basic validation ---
+      // 1) Ensure the captured file is an image
+      if (asset.type !== 'image') {
+        Alert.alert('Invalid file', 'Please capture an image.');
+        return;
+      }
+
+      // 2) Ensure file size ≤ 10 MB
+      try {
+        const info = await FileSystem.getInfoAsync(asset.uri, { size: true });
+        const sizeMB = info.size / (1024 * 1024);
+        if (sizeMB > 10) {
+          Alert.alert('File too large', 'Please capture a smaller image (max 10 MB).');
+          return;
+        }
+      } catch (e) {
+        // If we can’t read size we’ll still continue but log the error
+        console.warn('Could not read file size', e);
+      }
+
+      // 3) Ensure minimum dimensions 300×300
+      if (asset.width && asset.height && (asset.width < 300 || asset.height < 300)) {
+        Alert.alert('Image too small', 'Please capture an image at least 300×300 pixels.');
+        return;
+      }
+
+      const uri = asset.uri;
       const timestamp = new Date().toISOString();
       let loc = { city: 'Unknown', country: 'Unknown' };
       try {
