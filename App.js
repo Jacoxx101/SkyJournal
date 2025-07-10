@@ -117,8 +117,8 @@ export default function App() {
             activeOpacity={0.85}>
             <Image source={{ uri: p.uri }} style={styles.thumb} />
             <View style={styles.meta}>
-              <Text style={styles.metaText}>{date(p.timestamp)} · {time(p.timestamp)}</Text>
-              <Text style={styles.metaSub}>📍 {p.loc.city}, {p.loc.country}</Text>
+              <Text style={styles.locationText}>📍 {p.loc.city}, {p.loc.country}</Text>
+              <Text style={styles.dateText}>{date(p.timestamp)} · {time(p.timestamp)}</Text>
             </View>
           </TouchableOpacity>
         ))}
@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
   meta: {
     padding: 12
   },
-  metaText: {
-    fontSize: 15,
+  locationText: {
+    fontSize: 16,
     color: COLORS.text,
-    fontWeight: '600'
+    fontWeight: '700'
   },
-  metaSub: {
+  dateText: {
     fontSize: 13,
     color: COLORS.muted,
     marginTop: 4
