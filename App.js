@@ -108,7 +108,7 @@ export default function App() {
         <Text style={styles.sub}>Captured Moments: {photos.length}</Text>
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
+      <ScrollView contentContainerStyle={styles.gridContainer}>
         {photos.map((p) => (
           <TouchableOpacity
             key={p.id}
@@ -140,6 +140,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
   header: {
     paddingTop: 20,
     paddingBottom: 12,
@@ -162,7 +168,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     borderRadius: 16,
     overflow: 'hidden',
-    marginBottom: 20,
+    width: '48%',
+    marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
@@ -171,7 +178,7 @@ const styles = StyleSheet.create({
   },
   thumb: {
     width: '100%',
-    height: 200,
+    height: 160,
     backgroundColor: COLORS.card
   },
   meta: {
